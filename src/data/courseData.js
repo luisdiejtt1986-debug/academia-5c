@@ -138,7 +138,7 @@ export const courseData = [
       {
         type: "video",
         title: "Flujo de Caja",
-        url: "https://youtu.be/eqflLyaXtO0",
+        url: "https://youtu.be/3Mu_SywEMLI",
         points: ["Dinero disponible real", "Gastos vs Deudas", "Simulador de crédito"]
       },
       {
