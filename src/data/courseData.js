@@ -25,7 +25,7 @@ export const courseData = [
       {
         type: "video",
         title: "La Voluntad de Pago",
-        url: "https://youtu.be/wJ2PdKMm5qw",
+        url: "https://youtu.be/MGMXhQZUBto",
         points: ["Qué es el carácter", "Herramientas de análisis", "Señales de riesgo"]
       },
       {
