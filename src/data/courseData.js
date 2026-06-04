@@ -462,6 +462,11 @@ export const courseData = [
       title: "Simulador de Riesgo Externo",
       initialData: { inflation: 70, salesDrop: 60, climate: 30, logistics: 50 }
     },
+	{
+      type: "creditConditions", // ← Usa este tipo en tu switch
+      title: "Estructuración del Crédito (Simulador Condiciones Internas)",
+      // No necesita initialData porque ya tiene valores por defecto educativos
+    },
     {
       type: "quiz",
       questions: [

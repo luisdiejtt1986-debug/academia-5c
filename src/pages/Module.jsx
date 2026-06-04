@@ -15,6 +15,7 @@ import CompletionScreen from "../components/module/CompletionScreen";
 import CapitalSimulator from "../components/module/CapitalSimulator";
 import CollateralSimulator from "../components/module/CollateralSimulator";
 import CondicionesSimulator from "../components/module/CondicionesSimulator";
+import CreditConditionsSimulator from "../components/module/CreditConditionsSimulator";
 
 const moduleAccents = ["#1a6bff","#ff9f43","#00c896","#a55eea","#ff4757"];
 
@@ -87,6 +88,7 @@ function Module() {
       case "capitalSimulator": return <CapitalSimulator data={current} onNext={handleNext} accent={accent} />;
       case "collateralSimulator": return <CollateralSimulator data={current} onNext={handleNext} accent={accent} />;
       case "conditionsSimulator": return <CondicionesSimulator data={current} onNext={handleNext} accent={accent} />;
+	  case "creditConditions": return <CreditConditionsSimulator data={current} onNext={handleNext} accent={accent} />;
       case "storytelling": return <StorytellingScreen data={current} onNext={handleNext} accent={accent} />;
       case "summary": return <SummaryScreen data={current} onNext={handleNext} accent={accent} />;
       case "completion":

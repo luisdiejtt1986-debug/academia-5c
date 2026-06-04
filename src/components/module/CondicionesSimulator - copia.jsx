@@ -9,12 +9,11 @@ const factors = [
 ];
 
 function CondicionesSimulator({ data, onNext, accent = "#ff4757" }) {
-  // ✅ Inicialización segura y única al montar el componente
   const [vals, setVals] = useState({
-    inflation: data.initialData?.inflation ?? 70,
-    salesDrop: data.initialData?.salesDrop ?? 60,
-    climate: data.initialData?.climate ?? 30,
-    logistics: data.initialData?.logistics ?? 50,
+    inflation: data.initialData?.inflation || 70,
+    salesDrop: data.initialData?.salesDrop || 60,
+    climate: data.initialData?.climate || 30,
+    logistics: data.initialData?.logistics || 50,
   });
 
   const avgRisk = Object.values(vals).reduce((a, b) => a + b, 0) / 4;
@@ -38,6 +37,7 @@ function CondicionesSimulator({ data, onNext, accent = "#ff4757" }) {
         
         {factors.map(f => {
           const v = vals[f.key];
+          const pct = (v / 100) * 100;
           return (
             <div key={f.key} className="mb-4">
               <div className="flex items-center justify-between mb-1.5">
@@ -45,22 +45,12 @@ function CondicionesSimulator({ data, onNext, accent = "#ff4757" }) {
                   <span className="text-base">{f.icon}</span>
                   <span className="text-xs text-blue-200 font-medium">{f.label}</span>
                 </div>
-                {/* ✅ Lectura directa del estado para forzar actualización visual */}
-                <span className="text-sm font-black" style={{ color: f.color }}>{vals[f.key]}%</span>
+                <span className="text-sm font-black" style={{ color: f.color }}>{v}%</span>
               </div>
-              <input 
-                type="range" 
-                min={0} 
-                max={100} 
-                step={1} 
-                value={v}
-                onChange={(e) => setVals(prev => ({ ...prev, [f.key]: Number(e.target.value) }))}
-                className="w-full h-2 rounded-full cursor-pointer"
-                style={{ 
-                  accentColor: f.color,
-                  background: `linear-gradient(to right, ${f.color} 0%, ${f.color} ${v}%, rgba(255,255,255,0.15) ${v}%, rgba(255,255,255,0.15) 100%)` 
-                }} 
-              />
+              <input type="range" min={0} max={100} step={1} value={v}
+                onChange={e => setVals(prev => ({ ...prev, [f.key]: Number(e.target.value) }))}
+                className="w-full h-2 rounded-full cursor-pointer appearance-none"
+                style={{ background: `linear-gradient(to right, ${f.color} 0%, ${f.color} ${pct}%, rgba(255,255,255,0.15) ${pct}%, rgba(255,255,255,0.15) 100%)` }} />
             </div>
           );
         })}
