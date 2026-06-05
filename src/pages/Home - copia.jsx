@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Cody from "../assets/CodeBank.png";
@@ -21,24 +20,9 @@ function Home() {
   const allModulesCompleted = completedIds.length === courseData.length;
   const sortedModules = [...courseData].sort((a, b) => a.id - b.id);
 
-  //  Estado para el cartel de reflexión final
-  const [showReflection, setShowReflection] = useState(false);
-
-  // 🔍 Detecta cuando se completan todos los módulos y muestra el cartel (solo una vez por ciclo)
-  useEffect(() => {
-    if (allModulesCompleted) {
-      const hasSeen = localStorage.getItem("academia5c_reflection_seen");
-      if (!hasSeen) {
-        setShowReflection(true);
-        localStorage.setItem("academia5c_reflection_seen", "true");
-      }
-    }
-  }, [allModulesCompleted]);
-
   const handleReset = () => {
     if (window.confirm("¿Reiniciar todo el curso? Se perderá tu progreso.")) {
       localStorage.removeItem("academia5c_progress");
-      localStorage.removeItem("academia5c_reflection_seen"); // ⬅️ Permite que vuelva a salir al reiniciar
       window.location.reload();
     }
   };
@@ -46,7 +30,6 @@ function Home() {
   return (
     <div className="min-h-screen text-white pb-24 relative overflow-hidden"
       style={{ background: "linear-gradient(170deg, #04152d 0%, #0a2240 60%, #04152d 100%)" }}>
-      
       {/* BG decoration */}
       <div className="fixed top-0 right-0 w-72 h-72 rounded-full pointer-events-none opacity-5"
         style={{ background: "radial-gradient(circle, #1a6bff, transparent)", transform: "translate(40%,-40%)" }} />
@@ -172,44 +155,6 @@ function Home() {
           <p>Metodología 5C • Análisis Integral de Crédito</p>
         </div>
       </div>
-
-      {/*  CARTEL SUPERPUESTO: Reflexión Final (Solo aparece cuando se completan los 5 módulos) */}
-      {showReflection && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          onClick={() => setShowReflection(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="relative max-w-md w-full rounded-3xl p-6 border border-yellow-400/30 shadow-2xl"
-            style={{ background: "linear-gradient(135deg, #0a1128, #04152d)" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="text-center mb-4">
-              <span className="text-4xl mb-2 block">🌟</span>
-              <h3 className="text-xl font-black text-yellow-300 tracking-wide" style={{ fontFamily: 'Poppins' }}>
-                Reflexión Final
-              </h3>
-            </div>
-            <p className="text-center text-blue-100 leading-relaxed font-serif italic text-sm mb-6 px-2">
-              "Cada crédito aprobado representa una oportunidad para una familia, un negocio o un proyecto de vida. Por eso, analizar correctamente no es solo una responsabilidad financiera, sino también una responsabilidad humana."
-            </p>
-            <motion.button
-              whileTap={{ scale: 0.97 }}
-              onClick={() => setShowReflection(false)}
-              className="w-full py-3 rounded-2xl font-black text-white"
-              style={{ background: `linear-gradient(135deg, ${moduleColors[0].from}, ${moduleColors[0].to})` }}
-            >
-              Entendido
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 }

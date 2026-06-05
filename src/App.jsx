@@ -89,6 +89,7 @@ function Splash() {
           <span className="relative z-10">🚀 Comenzar Capacitación</span>
         </motion.button>
         <p className="text-center text-blue-400 text-xs mt-3 font-medium">5 módulos • Análisis profesional de crédito</p>
+        <p className="text-center text-blue-400 text-xs mt-1 font-medium">Banco Codesarrollo</p>
         <p className="text-center text-blue-400 text-xs mt-0 font-medium">Ing. Diego Jiménez Terrazas</p>
       </motion.div>
     </div>

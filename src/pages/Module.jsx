@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Cody from "../assets/cody.png";
+import Cody from "../assets/CodeBank.png";
 import { courseData } from "../data/courseData";
 
 import IntroScreen from "../components/module/IntroScreen";
@@ -115,7 +115,7 @@ function Module() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs text-blue-300 font-bold">{currentScreen + 1}/{screens.length}</span>
-            <img src={Cody} alt="Cody" className="w-9 h-9 object-contain" />
+            <img src={Cody} alt="Cody" className="w-50 h-9 object-contain" />
           </div>
         </div>
         {/* PROGRESS BAR */}

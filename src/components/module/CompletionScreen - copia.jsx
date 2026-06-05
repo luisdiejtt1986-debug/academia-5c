@@ -4,15 +4,6 @@ import TrophyIcon from "../../assets/trophy.png";
 import ConfettiIcon from "../../assets/confetti.png";
 import Cody from "../../assets/cody.png";
 
-// 📝 Frases exclusivas por módulo (mapeadas por el nombre de la Insignia/Badge)
-const MODULE_PHRASES = {
-  "Detector de Carácter": "El crédito no se sostiene solo en papeles y firmas, sino en la integridad de la persona. Al final del día, financiamos la voluntad de cumplir y el valor de la palabra.",
-  "Analista de Capacidad": "No buscamos comprometer el último centavo del cliente hoy, sino diseñar una cuota que le permita hacer crecer su negocio y vivir tranquilo mañana.",
-  "Analista de Capital": "Detrás del patrimonio de un cliente no solo hay activos, hay años de trabajo, sacrificio y resiliencia. Ese es su verdadero respaldo.",
-  "Especialista en Garantías": "La mejor garantía sigue siendo un cliente capaz y comprometido con sus obligaciones.",
-  "Analista de Entorno": "El mercado cambia de la noche a la mañana. Un buen analista no solo mira el clima de hoy, ayuda al cliente a prepararse para la tormenta de mañana."
-};
-
 function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -20,9 +11,6 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
 
   const isExcellent = stats.accuracy >= 80;
   const isLow = stats.accuracy < 50;
-
-  // 🔍 Obtener la frase correspondiente al módulo actual
-  const currentPhrase = MODULE_PHRASES[stats.badge] || null;
 
   const handleRepeat = () => {
     navigate(`/module?id=${moduleId}`, { replace: true });
@@ -32,21 +20,9 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
   const statusColor = isExcellent ? "#00c896" : isLow ? "#ff4757" : "#ffd93d";
   const statusBg = isExcellent ? "rgba(0,200,150,0.15)" : isLow ? "rgba(255,71,87,0.15)" : "rgba(255,217,61,0.15)";
 
-  // 💬 Mensaje de Cody según el resultado
-  const codyMessage = isLow 
-    ? '"¡No te rindas! Repasa el módulo y lo lograrás."'
-    : currentPhrase 
-      ? '"¡Has absorbido el conocimiento clave! Cody está orgulloso de tu progreso."' 
-      : '"¡Bien hecho! Sigue aprendiendo para dominar el análisis crediticio."';
-
-  // 🏆 Mensaje de la insignia (solo si aprueba)
-  const badgeMessage = isLow 
-    ? "Sigue practicando para desbloquear esta insignia" 
-    : "Has desbloqueado una nueva insignia";
-
   return (
     <div className="min-h-[calc(100vh-80px)] flex flex-col items-center p-5 pb-10 relative overflow-hidden">
-      {/* 🎊 Confetti rain (solo si es excelente) */}
+      {/* Confetti rain */}
       {isExcellent && [...Array(16)].map((_, i) => (
         <motion.img key={i} src={ConfettiIcon} alt="" className="absolute w-6 h-6 pointer-events-none"
           initial={{ x: Math.random() * 400 - 50, y: -40, rotate: 0, scale: 0.5 }}
@@ -58,7 +34,7 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl opacity-15 pointer-events-none"
         style={{ background: `radial-gradient(circle, ${statusColor}, transparent)` }} />
 
-      {/*  Header */}
+      {/* Header */}
       <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 180, delay: 0.1 }}
         className="text-center mt-4 mb-6 relative z-10">
@@ -73,7 +49,7 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
         </p>
       </motion.div>
 
-      {/* 🏅 Trophy + Badge */}
+      {/* Trophy + Badge */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
         className="w-full max-w-sm rounded-3xl p-5 mb-5 text-center relative z-10 border"
         style={{ background: statusBg, borderColor: `${statusColor}40` }}>
@@ -81,13 +57,12 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
           animate={isExcellent ? { y: [0, -8, 0], rotate: [0, 5, -5, 0] } : {}}
           transition={{ duration: 2, repeat: Infinity, delay: 1 }} />
         <p className="text-xl font-black mb-0.5" style={{ color: statusColor }}>{stats.badge}</p>
-        {/* ✅ CORRECCIÓN: Mensaje condicional según si aprobó o no */}
-        <p className="text-xs text-blue-300 font-medium">{badgeMessage}</p>
+        <p className="text-xs text-blue-300 font-medium">Has desbloqueado una nueva insignia</p>
       </motion.div>
 
-      {/* 📊 Stats Grid */}
+      {/* Stats */}
       <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-        className="grid grid-cols-3 gap-3 w-full max-w-sm mb-4 relative z-10">
+        className="grid grid-cols-3 gap-3 w-full max-w-sm mb-5 relative z-10">
         {[
           { emoji: "📚", value: `${stats.lessons}/${stats.lessons}`, label: "Lecciones" },
           { emoji: "❓", value: `${stats.correctAnswers}/${stats.totalQuestions}`, label: "Respuestas" },
@@ -108,44 +83,19 @@ function CompletionScreen({ data, onContinue, stats, accent = "#1a6bff" }) {
         ))}
       </motion.div>
 
-      {/* 💬 FRASE PREMIUM DEL MÓDULO (Solo si aprueba y hay frase configurada) */}
-      {currentPhrase && !isLow && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="relative w-full max-w-sm mx-auto mb-3"
-        >
-          <motion.div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-r from-yellow-400 via-yellow-600 to-yellow-400 bg-[length:200%_auto]"
-            animate={{ backgroundPosition: ["0% center", "100% center", "0% center"] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          />
-          <div className="relative z-10 m-0.5 bg-[#0a1128] rounded-[22px] p-6 overflow-hidden text-center">
-            <motion.div className="absolute top-3 right-4 text-2xl" animate={{ rotate: 360, scale: [1, 1.2, 1] }} transition={{ duration: 4, repeat: Infinity }}>✨</motion.div>
-            <motion.div className="absolute bottom-3 left-4 text-xl" animate={{ rotate: -360, scale: [1, 1.1, 1] }} transition={{ duration: 5, repeat: Infinity }}>💎</motion.div>
-            <p className="text-lg font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-white to-yellow-100 drop-shadow-md leading-relaxed px-2">
-              "{currentPhrase}"
-            </p>
-          </div>
-        </motion.div>
-      )}
-
-      {/* 🤖 CODY MOTIVACIONAL (Siempre visible) */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+      {/* Cody motivational */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
         className="flex items-center gap-3 w-full max-w-sm rounded-2xl p-3 mb-6 relative z-10 border border-white/5"
-        style={{ background: "rgba(255,255,255,0.05)" }}
-      >
+        style={{ background: "rgba(255,255,255,0.05)" }}>
         <img src={Cody} alt="Cody" className="w-12 flex-shrink-0" />
         <p className="text-xs text-blue-200 leading-relaxed font-medium italic">
-          {codyMessage}
+          {isExcellent ? '"¡Increíble análisis! Eres un verdadero profesional del crédito."'
+            : isLow ? '"¡No te rindas! Repasa el módulo y lo lograrás."'
+            : '"¡Bien hecho! Sigue aprendiendo para dominar el análisis crediticio."'}
         </p>
       </motion.div>
 
-      {/* 🔘 Buttons */}
+      {/* Buttons */}
       <div className="w-full max-w-sm space-y-3 relative z-10">
         {isLow ? (
           <>
