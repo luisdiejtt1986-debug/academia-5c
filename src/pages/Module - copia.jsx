@@ -103,42 +103,21 @@ function Module() {
   return (
     <div className="min-h-screen text-white" style={{ background: "linear-gradient(170deg, #04152d 0%, #0a2240 100%)" }}>
       {/* HEADER */}
-<div className="sticky top-0 z-50 border-b border-white/5 relative overflow-hidden"
-  style={{ background: "rgba(4,21,45,0.95)", backdropFilter: "blur(12px)" }}>
-  
-  {/* 🖼️ IMAGEN DE FONDO DECORATIVA (Capa inferior) */}
-  <div className="absolute inset-0 opacity-35 pointer-events-none">
-    <img 
-      src="/header-bg.png"
-      alt="" 
-      className="w-full h-full object-cover"
-      style={{ objectPosition: "center top" }}
-    />
-  </div>
-
-  {/* 📝 CONTENIDO (Capa superior - ENCIMA de la imagen) */}
-  <div className="relative z-10">
-    <div className="flex items-center gap-3 px-4 py-3">
-      <button onClick={handlePrevious}
-        className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-lg transition border border-white/10"
-        style={{ background: "rgba(255,255,255,0.07)" }}>←</button>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: accent }}>Módulo {moduleId}</p>
-        <h1 className="text-sm font-black truncate" style={{ fontFamily: 'Poppins' }}>{moduleData.title}</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-blue-300 font-bold">{currentScreen + 1}/{screens.length}</span>
-        <img src={Cody} alt="Cody" className="w-50 h-9 object-contain" />
-      </div>
-    </div>
-    
-    {/* PROGRESS BAR */}
-    <div className="h-1.5 bg-white/5">
-      <motion.div className="h-full rounded-r-full" style={{ background: `linear-gradient(90deg, ${accent}, ${accent}aa)` }}
-        initial={{ width: 0 }} animate={{ width: `${progress}%` }} transition={{ duration: 0.4 }} />
-    </div>
-  </div>
-
+      <div className="sticky top-0 z-50 border-b border-white/5"
+        style={{ background: "rgba(4,21,45,0.95)", backdropFilter: "blur(12px)" }}>
+        <div className="flex items-center gap-3 px-4 py-3">
+          <button onClick={handlePrevious}
+            className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-lg transition border border-white/10"
+            style={{ background: "rgba(255,255,255,0.07)" }}>←</button>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: accent }}>Módulo {moduleId}</p>
+            <h1 className="text-sm font-black truncate" style={{ fontFamily: 'Poppins' }}>{moduleData.title}</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-blue-300 font-bold">{currentScreen + 1}/{screens.length}</span>
+            <img src={Cody} alt="Cody" className="w-50 h-9 object-contain" />
+          </div>
+        </div>
         {/* PROGRESS BAR */}
         <div className="h-1.5 bg-white/5">
           <motion.div className="h-full rounded-r-full" style={{ background: `linear-gradient(90deg, ${accent}, ${accent}aa)` }}

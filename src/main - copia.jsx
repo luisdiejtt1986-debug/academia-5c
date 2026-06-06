@@ -3,13 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-// ✅ 1. IMPORTAR ANALYTICS (Usa /react porque tu app es Vite + React)
-import { Analytics } from '@vercel/analytics/react';
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    {/* ✅ 2. AGREGAR EL COMPONENTE AQUÍ */}
-    <Analytics />
   </StrictMode>,
 )
